@@ -1229,9 +1229,8 @@ function fitSelection(value, selectionSVGPointX, selectionSVGPointY, selectionWi
   var scaleX = viewerWidth / selectionWidth;
   var scaleY = viewerHeight / selectionHeight;
   var scaleLevel = Math.min(scaleX, scaleY);
-  var matrix = (0, _transformationMatrix.transform)((0, _transformationMatrix.scale)(scaleLevel, scaleLevel), //2
-  (0, _transformationMatrix.translate)(-selectionSVGPointX, -selectionSVGPointY) //1
-  ); // aligning selection to center of view
+  var translateY = 0;
+  var translateX = 0; // aligning selection to center of view
 
   if (scaleX < scaleY) {
     // match in width; sits on top -> centering by moving down
@@ -1242,6 +1241,11 @@ function fitSelection(value, selectionSVGPointX, selectionSVGPointY, selectionWi
     var remainderX = viewerWidth - scaleY * selectionWidth;
     translateX = Math.round(remainderX / 2) * scaleLevel;
   }
+
+  var translationMatrix = (0, _transformationMatrix.translate)(translateX, translateY);
+  var matrix = (0, _transformationMatrix.transform)((0, _transformationMatrix.scale)(scaleLevel, scaleLevel), //2
+  translationMatrix //1
+  );
 
   if (isZoomLevelGoingOutOfBounds(value, scaleLevel / value.d)) {
     // Do not allow scale and translation

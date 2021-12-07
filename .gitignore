@@ -8,7 +8,7 @@ npm-debug.log
 .DS_Store
 bower_components
 examples/*/yarn.lock
-build-*
+build-storybook
 .cache
 coverage
 .eslintcache

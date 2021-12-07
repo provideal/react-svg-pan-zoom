@@ -61,7 +61,6 @@ export function zoom(value, SVGPointX, SVGPointY, scaleFactor) {
 //ENHANCEMENT: add ability to selectively fit image inside viewer
 //ENHANCEMENT: refactor some logic in order to merge with fitToViewer function
 export function fitSelection(value, selectionSVGPointX, selectionSVGPointY, selectionWidth, selectionHeight) {
-  console.log('yes, this is the right module in use');
   let {viewerWidth, viewerHeight} = value;
 
   let scaleX = viewerWidth / selectionWidth;

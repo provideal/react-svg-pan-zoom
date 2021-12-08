@@ -1,6 +1,7 @@
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
 import ReactSVGPanZoom from '../../src/viewer';
 import Snake from './components/Snake.svg'
+import Test from './components/Test.svg'
 import {useWindowSize} from '@react-hook/window-size'
 import {
   ALIGN_BOTTOM,
@@ -143,6 +144,12 @@ export const Methods = (args) => {
         <Button onClick={event => Viewer.current.reset()}>.reset()
         </Button>
 
+        <Button onClick={event => Viewer.current.fitSelection(100, 100, 200, 400)}>select red Box
+        </Button>
+
+        <Button onClick={event => Viewer.current.fitSelection(400, 100, 600, 200)}>select green Box
+        </Button>
+
         <Button onClick={event => Viewer.current.fitSelection(725, 40, 200, 120)}>.fitSelection(725, 40, 200, 120)
         </Button>
 
@@ -201,7 +208,7 @@ export const Methods = (args) => {
         {...args}
       >
         <svg width={1440} height={1440}>
-          <Snake/>
+          <Test/>
         </svg>
       </ReactSVGPanZoom>
     </>

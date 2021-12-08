@@ -68,18 +68,18 @@ export function fitSelection(value, selectionSVGPointX, selectionSVGPointY, sele
 
   let scaleLevel = Math.min(scaleX, scaleY);
 
-  let translateY = 0;
-  let translateX = 0;
+  let translateX = -selectionSVGPointX;
+  let translateY = -selectionSVGPointY;
 
   // aligning selection to center of view
   if (scaleX < scaleY) {
     // match in width; sits on top -> centering by moving down
     let remainderY = viewerHeight - scaleX * selectionHeight;
-    translateY = Math.round(remainderY / 2) * scaleLevel;
+    translateY = Math.round(remainderY / 2) - selectionSVGPointY * scaleLevel;
   } else {
     // match in height; sits left -> centering by moving right
     let remainderX = viewerWidth - scaleY * selectionWidth;
-    translateX = Math.round(remainderX / 2) * scaleLevel;
+    translateX = Math.round(remainderX / 2) - selectionSVGPointX * scaleLevel;
   }
 
   const translationMatrix = translate(translateX, translateY);

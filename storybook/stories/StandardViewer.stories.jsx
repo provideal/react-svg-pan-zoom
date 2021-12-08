@@ -260,6 +260,22 @@ export const Resizable = (args) => {
     Viewer.current.fitToViewer();
   }, []);
 
+  const handleClick = (e) => {
+    const target = e.currentTarget;
+    const parent = target.parentNode;
+    const rect = target.getBoundingClientRect();
+    const ctm = parent.getScreenCTM().inverse();
+    const quad = DOMQuad.fromRect(rect);
+    const screenBBox = new DOMQuad(
+      quad.p1.matrixTransform(ctm),
+      quad.p2.matrixTransform(ctm),
+      quad.p3.matrixTransform(ctm),
+      quad.p4.matrixTransform(ctm)
+    ).getBounds();
+
+    Viewer.current.fitSelection(screenBBox.x, screenBBox.y, screenBBox.width, screenBBox.height);
+  }
+
   return (
     <ReactSVGPanZoom
       width={width} height={height}
@@ -269,7 +285,22 @@ export const Resizable = (args) => {
       {...args}
     >
       <svg width={1440} height={1440}>
-        <Snake/>
+        <g>
+          <rect
+            style={{fill: '#ff0000'}}
+            width="200"
+            height="400"
+            x="100"
+            y="100"
+            onClick={e => handleClick(e)} />
+          <rect
+            style={{fill: '#00ff00'}}
+            width="600"
+            height="200"
+            x="400"
+            y="100"
+            onClick={e => handleClick(e)} />
+        </g>
       </svg>
     </ReactSVGPanZoom>
   )

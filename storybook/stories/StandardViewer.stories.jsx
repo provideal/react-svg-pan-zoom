@@ -171,7 +171,7 @@ export const Methods = (args) => {
         <Button onClick={event => Viewer.current.zoomOnViewerCenter(1.1)}>.zoomOnViewerCenter(1.1)
         </Button>
 
-        <Button onClick={event => Viewer.current.zoomOnViewerCenter(0.9)}>.zoomOnViewerCenter(0.9)}
+        <Button onClick={event => Viewer.current.zoomOnViewerCenter(0.9)}>.zoomOnViewerCenter(0.9)
         </Button>
 
         <Button onClick={event => Viewer.current.setPointOnViewerCenter(525, 780, 2)}>.setPointOnViewerCenter(525, 780,

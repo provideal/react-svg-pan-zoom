@@ -1,7 +1,6 @@
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
 import ReactSVGPanZoom from '../../src/viewer';
 import Snake from './components/Snake.svg'
-import Test from './components/Test.svg'
 import {useWindowSize} from '@react-hook/window-size'
 import {
   ALIGN_BOTTOM,

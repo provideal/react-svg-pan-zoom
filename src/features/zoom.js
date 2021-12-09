@@ -68,37 +68,35 @@ export function fitSelection(value, selectionSVGPointX, selectionSVGPointY, sele
 
   let scaleLevel = Math.min(scaleX, scaleY);
 
-  let translateX = -selectionSVGPointX;
-  let translateY = -selectionSVGPointY;
+  let translateX = -selectionSVGPointX * scaleX;
+  let translateY = -selectionSVGPointY * scaleY;
 
   // aligning selection to center of view
-  if (scaleX < scaleY) {
-    // match in width; sits on top -> centering by moving down
+  if (scaleX < scaleY) {  // match in width; sits on top -> centering by moving down
     let remainderY = viewerHeight - scaleX * selectionHeight;
     translateY = Math.round(remainderY / 2) - selectionSVGPointY * scaleLevel;
-  } else {
-    // match in height; sits left -> centering by moving right
+  } else {                // match in height; sits left -> centering by moving right
     let remainderX = viewerWidth - scaleY * selectionWidth;
-    translateX = Math.round(remainderX / 2) - selectionSVGPointX * scaleLevel;
+    translateX = Math.round(remainderX / 2) - (selectionSVGPointX * scaleLevel);
   }
 
   const translationMatrix = translate(translateX, translateY);
 
   const matrix = transform(
+    translationMatrix,             //1
     scale(scaleLevel, scaleLevel), //2
-    translationMatrix              //1
   );
   
-  if(isZoomLevelGoingOutOfBounds(value, scaleLevel / value.d)) {
-    // Do not allow scale and translation
-    return set(value, {
-      mode: MODE_IDLE,
-      startX: null,
-      startY: null,
-      endX: null,
-      endY: null
-    });
-  }
+  // if(isZoomLevelGoingOutOfBounds(value, scaleLevel / value.d)) {
+  //   // Do not allow scale and translation
+  //   return set(value, {
+  //     mode: MODE_IDLE,
+  //     startX: null,
+  //     startY: null,
+  //     endX: null,
+  //     endY: null
+  //   });
+  // }
 
   return set(value, {
     mode: MODE_IDLE,

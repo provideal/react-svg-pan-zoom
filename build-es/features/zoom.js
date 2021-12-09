@@ -59,8 +59,8 @@ export function fitSelection(value, selectionSVGPointX, selectionSVGPointY, sele
   var scaleX = viewerWidth / selectionWidth;
   var scaleY = viewerHeight / selectionHeight;
   var scaleLevel = Math.min(scaleX, scaleY);
-  var translateX = -selectionSVGPointX;
-  var translateY = -selectionSVGPointY; // aligning selection to center of view
+  var translateX = -selectionSVGPointX * scaleX;
+  var translateY = -selectionSVGPointY * scaleY; // aligning selection to center of view
 
   if (scaleX < scaleY) {
     // match in width; sits on top -> centering by moving down
@@ -73,20 +73,18 @@ export function fitSelection(value, selectionSVGPointX, selectionSVGPointY, sele
   }
 
   var translationMatrix = translate(translateX, translateY);
-  var matrix = transform(scale(scaleLevel, scaleLevel), //2
-  translationMatrix //1
-  );
-
-  if (isZoomLevelGoingOutOfBounds(value, scaleLevel / value.d)) {
-    // Do not allow scale and translation
-    return set(value, {
-      mode: MODE_IDLE,
-      startX: null,
-      startY: null,
-      endX: null,
-      endY: null
-    });
-  }
+  var matrix = transform(translationMatrix, //1
+  scale(scaleLevel, scaleLevel) //2
+  ); // if(isZoomLevelGoingOutOfBounds(value, scaleLevel / value.d)) {
+  //   // Do not allow scale and translation
+  //   return set(value, {
+  //     mode: MODE_IDLE,
+  //     startX: null,
+  //     startY: null,
+  //     endX: null,
+  //     endY: null
+  //   });
+  // }
 
   return set(value, _objectSpread(_objectSpread({
     mode: MODE_IDLE
